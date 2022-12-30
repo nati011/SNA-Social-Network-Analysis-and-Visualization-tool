@@ -6,7 +6,6 @@
 using namespace std;
 
 
-
 void graph::insert_node(string Name)
 {
 
@@ -55,7 +54,7 @@ void graph::remove_node(unsigned int id)
     for(int i = 0; i < node_ptr->adjecent_nodes.size(); i++)
     {
 
-        remove_edge( node_ptr->adjecent_nodes[i], node_ptr->_id);
+       remove_edge( node_ptr->adjecent_nodes[i], node_ptr->_id);
     }
 
     //remove from map
@@ -71,13 +70,13 @@ void graph::add_edge(unsigned int id_1, unsigned int id_2)
         return;
     }
 
-    if( !vertices[id_1] && !vertices[id_2] )
+    if( vertices[id_1] == nullptr || vertices[id_2] == nullptr )
     {
         cerr<<"Error: either or both nodes do not exist!";
         return;
     }
 
-    if( are_related( vertices[id_1], vertices[id_2] ) )
+    if( are_related( id_1, id_2 ) )
     {
         cerr<<"Error: edge already exist";
         return;
@@ -111,27 +110,32 @@ void graph::add_edge(node* nd_1, node* nd_2)
 
 void graph::remove_edge(node* a, node* b)
 {
+
     if( !are_related(a, b) )
     {
         cerr<<"Error: edge does not exist";
         return;
     }
 
-    auto itrA = std::find(a->adjecent_nodes.begin(), a->adjecent_nodes.end(), b);
+    //find and remove from a
+    for(int i=0; i<a->adjecent_nodes.size(); i++)
+    {
+        if(a->adjecent_nodes[i] == b->_id)
+        {
+            a->adjecent_nodes.erase(a->adjecent_nodes.begin() + i);
+            break;
+        }
+    }
+    //find and remove from b
+    for(int i=0; i<b->adjecent_nodes.size(); i++)
+    {
+        if(b->adjecent_nodes[i] == a->_id)
+        {
+            b->adjecent_nodes.erase(b->adjecent_nodes.begin() + i);
+            break;
+        }
+    }
 
-	if (itrA != a->adjecent_nodes.end())	// if found
-	{
-		// delete Node b from Node a's adjacency list
-		a->adjecent_nodes.erase(itrA);
-	}
-
-	// remove node a from node b's Adjacency List.
-	auto itrB = find(b->adjecent_nodes.begin(), b->adjecent_nodes.end(), a);
-	if (itrB != b->adjecent_nodes.end())
-	{
-		// delete node a from node b's adjacency list
-		b->adjecent_nodes.erase(itrB);
-	}
 }
 
 void graph::remove_edge(unsigned int id_1, unsigned int id_2)
@@ -145,21 +149,24 @@ void graph::remove_edge(unsigned int id_1, unsigned int id_2)
         return;
     }
 
-    auto itrA = find(a->adjecent_nodes.begin(), a->adjecent_nodes.end(), b);
-
-	if (itrA != a->adjecent_nodes.end())	// if found
-	{
-		// delete Node b from Node a's adjacency list
-		a->adjecent_nodes.erase(itrA);
-	}
-
-	// remove node a from node b's Adjacency List.
-	auto itrB = find(b->adjecent_nodes.begin(), b->adjecent_nodes.end(), a);
-	if (itrB != b->adjecent_nodes.end())
-	{
-		// delete node a from node b's adjacency list
-		b->adjecent_nodes.erase(itrB);
-	}
+     //find and remove from a
+    for(int i=0; i<a->adjecent_nodes.size(); i++)
+    {
+        if(a->adjecent_nodes[i] == b->_id)
+        {
+            a->adjecent_nodes.erase(a->adjecent_nodes.begin() + i);
+            break;
+        }
+    }
+    //find and remove from b
+    for(int i=0; i<b->adjecent_nodes.size(); i++)
+    {
+        if(b->adjecent_nodes[i] == a->_id)
+        {
+            b->adjecent_nodes.erase(b->adjecent_nodes.begin() + i);
+            break;
+        }
+    }
 }
 
 bool graph::are_related(node* a, node* b)
@@ -170,11 +177,71 @@ bool graph::are_related(node* a, node* b)
 		return false;
 	}
 
+	bool flag_1 = false;
+	bool flag_2 = false;
 	// Check if Nodes have relation
-	auto itrA = find(a->adjecent_nodes.begin(), a->adjecent_nodes.end(), b);
-	auto itrB = find(b->adjecent_nodes.begin(), b->adjecent_nodes.end(), a);
 
-	if (itrA != a->adjecent_nodes.end() && itrB != b->adjecent_nodes.end())
+    for(int i=0; i<a->adjecent_nodes.size(); i++)
+    {
+        if(a->adjecent_nodes[i] == b->_id)
+        {
+            flag_1 = true;
+            break;
+        }
+    }
+
+    for(int i=0; i<b->adjecent_nodes.size(); i++)
+    {
+        if(b->adjecent_nodes[i] == a->_id)
+        {
+            flag_2 = true;
+            break;
+        }
+    }
+	if (flag_1 && flag_2)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool graph::are_related(unsigned int i_a, unsigned int i_b)
+{
+
+	node* a = vertices[i_a];
+	node* b = vertices[i_b];
+	// Check if nodes exist
+
+	if (!(a && b))
+	{
+		return false;
+	}
+
+	bool flag_1 = false;
+	bool flag_2 = false;
+	// Check if Nodes have relation
+
+    for(int i=0; i<a->adjecent_nodes.size(); i++)
+    {
+        if(a->adjecent_nodes[i] == b->_id)
+        {
+            flag_1 = true;
+            break;
+        }
+    }
+
+    for(int i=0; i<b->adjecent_nodes.size(); i++)
+    {
+        if(b->adjecent_nodes[i] == a->_id)
+        {
+            flag_2 = true;
+            break;
+        }
+    }
+	if (flag_1 && flag_2)
 	{
 		return true;
 	}
@@ -302,12 +369,13 @@ void graph::list_common_friends(string Name_1,string Name_2)
     }
 }
 
-void graph::list_nodes_names()
+void graph::list_nodes_name()
 {
     cout<<"nodes:"<<endl<<"[";
     for(int i=0; i <= vertices.size(); i++)
     {
-        cout<<" "<<vertices[i]->_Name<<" |";
+
+    cout<<" "<<vertices[i]->_Name<<" |";
     }
 }
 

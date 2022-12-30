@@ -8,9 +8,9 @@ using namespace std;
 int main()
 {
     graph g;
-    g.insert_node("a");
+
     g.insert_node("Natnael");
-    g.insert_node("Paul");
-    g.insert_node("Abel");
-    g.list_nodes_names();
+
+    g.list_nodes_name();
+
 }

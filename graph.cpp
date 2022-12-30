@@ -51,10 +51,10 @@ void graph::remove_node(unsigned int id)
     node* node_ptr = vertices[id];
     int key;
     //remove all edges
+
     for(int i = 0; i < node_ptr->adjecent_nodes.size(); i++)
     {
-
-       remove_edge( node_ptr->adjecent_nodes[i], node_ptr->_id);
+        remove_edge( node_ptr->adjecent_nodes[i], node_ptr->_id);
     }
 
     //remove from map
@@ -81,6 +81,9 @@ void graph::add_edge(unsigned int id_1, unsigned int id_2)
         cerr<<"Error: edge already exist";
         return;
     }
+    //add respective ids to nodes
+    nd_1->adjecent_nodes.push_back(vertices[id_2]->_id);
+    nd_2->adjecent_nodes.push_back(vertices[id_1]->_id);
 }
 
 void graph::add_edge(node* nd_1, node* nd_2)

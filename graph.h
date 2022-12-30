@@ -12,8 +12,6 @@ class graph
 {
 public:
 
-
-
         void insert_node( string name);
         void remove_node(unsigned int id);
         void add_edge(unsigned int id_1, unsigned int id_2);
@@ -32,7 +30,6 @@ public:
 
 
 private:
-
 
         unordered_map<unsigned int, node*> vertices;
 

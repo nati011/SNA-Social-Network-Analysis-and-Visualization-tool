@@ -12,7 +12,7 @@ class graph
 {
 public:
 
-        //todo: Implement map
+        
 
         void insert_node(string name);
         void remove_node(unsigned int id);

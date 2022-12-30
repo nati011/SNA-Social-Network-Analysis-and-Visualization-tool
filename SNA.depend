@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1672407873 source:c:\users\nati\desktop\sna\main.cpp
+	<iostream>
+	<string>
+	"C:\\Users\\Nati\\Desktop\\SNA\\graph.h"
+
+1672407887 c:\\users\\nati\\desktop\\sna\\graph.h
+	<string>
+	<unordered_map>
+	<vector>
+	"C:\\Users\\Nati\\Desktop\\SNA\\node.h"
+
+1672407204 c:\\users\\nati\\desktop\\sna\\node.h
+	<string>
+	<vector>
+

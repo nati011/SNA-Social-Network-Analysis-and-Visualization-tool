@@ -3,20 +3,14 @@
 
 #include <string>
 #include <vector>
+using namespace std;
 
-class node
+struct node
 {
-public:
-        vector<node*>adjecent_nodes;
+    vector<int>adjecent_nodes;
 
-        node(unsigned int id, unsigned int Name)
-        {
-            _id = id;
-            _Name = Name;
-        }
-
-        unsigned int _id;
-        string _Name;
+    unsigned int _id;
+    string _Name;
 
 };
 

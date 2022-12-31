@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-struct node
+struct person
 {
     vector<int>adjecent_nodes;
 

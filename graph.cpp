@@ -25,7 +25,7 @@ void graph::insert_node(string Name)
             }
         }
 
-        node new_node;
+        person new_node;
         new_node._id = id;
         new_node._Name = Name;
         vertices.insert({id, &new_node});
@@ -48,7 +48,7 @@ void graph::remove_node(unsigned int id)
         return;
     }
 
-    node* node_ptr = vertices[id];
+    person* node_ptr = vertices[id];
     int key;
     //remove all edges
 
@@ -64,6 +64,7 @@ void graph::remove_node(unsigned int id)
 void graph::add_edge(unsigned int id_1, unsigned int id_2)
 {
     //nodes must be different
+
     if(id_1 == id_2)
     {
         cerr<<"Error: self-referential edge is not allowed!";
@@ -81,12 +82,15 @@ void graph::add_edge(unsigned int id_1, unsigned int id_2)
         cerr<<"Error: edge already exist";
         return;
     }
+
+    person* nd_1 = vertices[id_1];
+    person* nd_2 = vertices[id_2];
     //add respective ids to nodes
     nd_1->adjecent_nodes.push_back(vertices[id_2]->_id);
     nd_2->adjecent_nodes.push_back(vertices[id_1]->_id);
 }
 
-void graph::add_edge(node* nd_1, node* nd_2)
+void graph::add_edge(person* nd_1, person* nd_2)
 {
     //nodes must be different
     if( nd_1 == nd_2 )
@@ -111,7 +115,7 @@ void graph::add_edge(node* nd_1, node* nd_2)
     nd_2->adjecent_nodes.push_back(nd_1->_id);
 }
 
-void graph::remove_edge(node* a, node* b)
+void graph::remove_edge(person* a, person* b)
 {
 
     if( !are_related(a, b) )
@@ -143,8 +147,8 @@ void graph::remove_edge(node* a, node* b)
 
 void graph::remove_edge(unsigned int id_1, unsigned int id_2)
 {
-    node* a = vertices[id_1];
-    node* b = vertices[id_2];
+    person* a = vertices[id_1];
+    person* b = vertices[id_2];
 
     if( !are_related( a, b) )
     {
@@ -172,7 +176,7 @@ void graph::remove_edge(unsigned int id_1, unsigned int id_2)
     }
 }
 
-bool graph::are_related(node* a, node* b)
+bool graph::are_related(person* a, person* b)
 {
 	// Check if nodes exist
 	if (!(a && b))
@@ -214,8 +218,8 @@ bool graph::are_related(node* a, node* b)
 bool graph::are_related(unsigned int i_a, unsigned int i_b)
 {
 
-	node* a = vertices[i_a];
-	node* b = vertices[i_b];
+	person* a = vertices[i_a];
+	person* b = vertices[i_b];
 	// Check if nodes exist
 
 	if (!(a && b))
@@ -257,7 +261,7 @@ bool graph::are_related(unsigned int i_a, unsigned int i_b)
 void graph::list_adjecent_nodes(int id)
 {
 
-    node* node_ptr = vertices[id];
+    person* node_ptr = vertices[id];
     for(int j = 0; j < node_ptr->adjecent_nodes.size(); j++)
     {
         cout<<" "<<node_ptr->adjecent_nodes[j]<<" |";
@@ -269,7 +273,7 @@ void graph::list_adjecent_nodes(int id)
 void graph::list_adjecent_nodes(string Name)
 {
 
-    node* node_ptr = nullptr;
+    person* node_ptr = nullptr;
 
     for(int i = vertices.size(); i>=0; i--)
     {
@@ -289,8 +293,8 @@ void graph::list_adjecent_nodes(string Name)
 
 void graph::list_common_friends(int id_1, int id_2)
 {
-    node* node_ptr_1 = vertices[id_1];
-    node* node_ptr_2 = vertices[id_2];
+    person* node_ptr_1 = vertices[id_1];
+    person* node_ptr_2 = vertices[id_2];
     unsigned int key;
 
     cout<<"Common friends:"<<endl<<"[";
@@ -309,7 +313,7 @@ void graph::list_common_friends(int id_1, int id_2)
     }
 }
 
-vector<unsigned int> graph::list_common_friends_vector(node* node_ptr_1, node* node_ptr_2)
+vector<unsigned int> graph::list_common_friends_vector(person* node_ptr_1, person* node_ptr_2)
 {
     vector<unsigned int> ids;
     unsigned int key;
@@ -333,7 +337,7 @@ vector<unsigned int> graph::list_common_friends_vector(node* node_ptr_1, node* n
 void graph::list_common_friends(string Name_1,string Name_2)
 {
 
-    node* node_ptr_1 = nullptr;
+    person* node_ptr_1 = nullptr;
 
     for(int i = vertices.size(); i>=0; i--)
     {
@@ -344,7 +348,7 @@ void graph::list_common_friends(string Name_1,string Name_2)
         }
     }
 
-    node* node_ptr_2 = nullptr;
+    person* node_ptr_2 = nullptr;
 
     for(int i = vertices.size(); i>=0; i--)
     {
@@ -382,9 +386,9 @@ void graph::list_nodes_name()
     }
 }
 
-vector<node*> graph::list_nodes_vector()
+vector<person*> graph::list_nodes_vector()
 {
-    vector<node*> nds;
+    vector<person*> nds;
 
     for(int i=0; i<= vertices.size(); i++)
     {

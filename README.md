@@ -10,5 +10,6 @@ todo: Tiny
 
 
 [done] 
+
 Instead of using node pointers for the adjecency lists use ids
 name change node struct to -> Person 

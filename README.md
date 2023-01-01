@@ -7,6 +7,7 @@ todo: Major
 
 todo: Tiny
 1) Create Person(priorly called node) attributes
+2) check null ptrs
 
 
 [done] 

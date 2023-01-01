@@ -1,8 +1,14 @@
 # SNA
  
-todo:
+todo: Major
 1) Implement Vector
 2) Implement Unordered map
 3) write test
 
-[done] instead of using node pointers for the adjecency lists we can use ids
+todo: Tiny
+1) Create Person(priorly called node) attributes
+
+
+[done] 
+Instead of using node pointers for the adjecency lists use ids
+name change node struct to -> Person 

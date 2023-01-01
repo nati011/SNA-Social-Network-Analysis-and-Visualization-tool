@@ -8,6 +8,7 @@ todo: Major
 todo: Tiny
 1) Create Person(priorly called node) attributes
 2) check null ptrs
+3) change if map empty check with .contains(key) call
 
 
 [done] 

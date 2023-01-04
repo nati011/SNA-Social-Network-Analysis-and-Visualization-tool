@@ -15,5 +15,6 @@ todo: Tiny
 
 [done] 
 
-Instead of using node pointers for the adjecency lists use ids
-name change node struct to -> Person 
+1)Instead of using node pointers for the adjecency lists use ids
+
+2)name change node struct to -> Person 
